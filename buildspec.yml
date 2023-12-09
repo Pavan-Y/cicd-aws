@@ -18,8 +18,8 @@ phases:
     commands:
       - echo "In build phase"
       # - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin "$DOCKER_REGISTRY"
-      # - aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin $DOCKER_REGISTRY
-      - $(aws ecr get-login-password --region $AWS_DEFAULT_REGION )
+      - aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin $DOCKER_REGISTRY
+      # - $(aws ecr get-login-password --region $AWS_DEFAULT_REGION )
       - echo "$DOCKER_REGISTRY/$DOCKER_USERNAME/py-app:$IMAGE_TAG"
       - docker build -t "$DOCKER_REGISTRY/$DOCKER_USERNAME/py-app:$IMAGE_TAG" .
       - docker push "$DOCKER_REGISTRY/$DOCKER_USERNAME/py-app:$IMAGE_TAG"
