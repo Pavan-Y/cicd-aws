@@ -1,0 +1,21 @@
+version: 0.2
+
+env:
+  parameter-store:
+    DOCKER_USERNAME:  /py-app/docker_user
+    DOCKER_PASSWORD: /py-app/docker_password
+    DOCKER_REGISTRY: /py-app/docker_url
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.11
+    build:
+      commands:
+        - echo "In build phase"
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin "$DOCKER_REGISTRY
+        - docker build -t "$DOCKER_REGISTRY/$DOCKER_USERNAME/py-app:latest" .
+        - docker push "$DOCKER_REGISTRY/$DOCKER_USERNAME/py-app:latest"
+    post_build:
+      commands:
+        - echo "Build is completed."
