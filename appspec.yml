@@ -1,0 +1,16 @@
+version: 0.0
+
+env:
+  parameter-store:
+    TASK_DEFINITION_ARN:  /py-app/task_arn
+    CONTAINER_NAME: /py-app/container_name
+    CONTAINER_PORT: /py-app/container_port
+
+Resources:
+  - TargetServices:
+      Type: "AWS::ECS::Service"
+      Properties:
+        TaskDefinition: "${TASK_DEFINITION_ARN}"
+        LoadBalancerInfo:
+          ContainerName: "${CONTAINER_NAME}"
+          ContainerPort: ${CONTAINER_PORT}
