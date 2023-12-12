@@ -1,10 +1,14 @@
-from fastapi import FastAPI,Response
+from fastapi import FastAPI, Request
+from fastapi.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates
 
 app = FastAPI()
+templates = Jinja2Templates(directory="py-app/templates")
 
 @app.get('/')
-def main():
-    return Response(content="Application is running...", media_type="text/plain")
+def main(request: Request):
+    content = "Your application is running..."
+    return templates.TemplateResponse("index.html", {"request": request, "content": content})
 
 if __name__ == '__main__':
     import uvicorn
